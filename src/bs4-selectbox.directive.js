@@ -1,6 +1,5 @@
 require('./bs4-selectbox.css');
 require('./bs4-selectbox.module.js');
-const logger = require('../logger')('bs4selectbox');
 
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
