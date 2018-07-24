@@ -1,6 +1,6 @@
 {
   "name": "bs4-selectbox",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A simple yet powerful selectbox component for angularjs.",
   "main": "index.js",
   "directories": {
