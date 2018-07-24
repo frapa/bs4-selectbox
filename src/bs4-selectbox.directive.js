@@ -43,13 +43,28 @@ function bs4SelectboxController($scope) {
     // --------------------------------
 
     function search(obj) {
+        if (!ctrl.searchAttrs) {
+            throw new Error('You must specify the search-attrs (potentially comma separated list) for the search in bs4-selectbox to work properly.');
+        }
+
         const searchAttrs = ctrl.searchAttrs.split(',').map(s => s.trim());
+        const search = ctrl.search.toLowerCase();
 
         let found = false;
         for (const attr of searchAttrs) {
-            if (obj[attr].toLowerCase().indexOf(ctrl.search.toLowerCase()) !== -1) {
-                found = true;
-                break;
+            let value = obj[attr];
+
+            if (value) {
+                if (typeof value == 'string') {
+                    value = value.toLowerCase();
+                } else {
+                    value = value.toString().toLowerCase();
+                }
+
+                if (value.indexOf(search) !== -1) {
+                    found = true;
+                    break;
+                }
             }
         }
 
@@ -72,6 +87,11 @@ function bs4SelectboxController($scope) {
         }
     }
 
+    function focus() {
+        const input = document.querySelector('#bs4-selectbox-' + ctrl.uuid + ' input');
+        input.focus();
+    }
+
     function select(evt, option) {
         if (ctrl.multiple) {
             ctrl.model.push(option);
@@ -79,6 +99,12 @@ function bs4SelectboxController($scope) {
             $scope.item = option;
             ctrl.model[0] = option;
         }
+
+        ctrl.search = '';
+
+        evt.preventDefault();
+        // keep focus
+        focus();
     }
 
     function deselect(evt, option) {

@@ -1,9 +1,15 @@
 .bs4-selectbox-container {
     cursor: text;
     vertical-align: baseline;
+    position: relative;
 }
 
-.bs4-selectbox-container .select-input {
+.bs4-selectbox-container .dropdown-toggle  {
+    position: relative;
+    overflow-x: auto;
+}
+
+.bs4-selectbox-container .bs4-select-input {
     margin: 1px;
     outline: none;
     border: 0;
@@ -11,20 +17,24 @@
     box-shadow: none;
 }
 
-.bs4-selectbox-container .select-input:active,
-.bs4-selectbox-container .select-input:focus {
+.bs4-selectbox-container .bs4-select-input:active,
+.bs4-selectbox-container .bs4-select-input:focus {
     outline: none;
     border: 0;
     background: 0;
     box-shadow: none;
 }
 
-.bs4-selectbox-container .choices .badge-close {
+.bs4-selectbox-container .bs4-choices .badge-close {
     margin-left: 1em;
     margin-right: 0.5em;
     cursor: pointer;
 }
 
 .bs4-selectbox-container .dropdown-toggle::after {
-    margin-top: 12px;
+}
+
+.bs4-selectbox-container .dropdown-menu {
+    max-height: 20em;
+    overflow-y: auto;
 }
