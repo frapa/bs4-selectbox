@@ -24,6 +24,14 @@ And what it tries not to:
 
 ## Install
 
+Using npm
+
+```bash
+npm install bs4-selectbox --save-dev
+```
+
+
+
 ## Documentation
 
 The usage documentation can be found

@@ -1,0 +1,1 @@
+require('./src/bs4-selectbox.directive.js');
