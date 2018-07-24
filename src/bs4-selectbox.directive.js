@@ -8,7 +8,7 @@ function uuidv4() {
     });
 }
 
-angular.module('bs4-selectbox').directive('bs4selectbox', [function () {
+angular.module('bs4-selectbox').directive('bs4Selectbox', [function () {
     return {
         restrict: 'E',
         template: require('./bs4-selectbox.directive.html'),
@@ -21,14 +21,14 @@ angular.module('bs4-selectbox').directive('bs4selectbox', [function () {
         },
         transclude: true,
         bindToController: true,
-        controllerAs: 'bs4selectboxCtrl',
-        controller: scBs4selectboxController,
+        controllerAs: 'bs4SelectboxCtrl',
+        controller: bs4SelectboxController,
     };
 }]);
 
-scBs4selectboxController.$inject = ['$scope'];
+bs4SelectboxController.$inject = ['$scope'];
 
-function scBs4selectboxController($scope) {
+function bs4SelectboxController($scope) {
     const ctrl = this;
 
     ctrl.search = '';
