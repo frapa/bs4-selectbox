@@ -1,6 +1,6 @@
-require('./bs4-select.css');
-require('./bs4-select.module.js');
-const logger = require('../logger')('bs4Select');
+require('./bs4-selectbox.css');
+require('./bs4-selectbox.module.js');
+const logger = require('../logger')('bs4selectbox');
 
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -9,10 +9,10 @@ function uuidv4() {
     });
 }
 
-angular.module('bs4-select').directive('bs4Select', [function () {
+angular.module('bs4-selectbox').directive('bs4selectbox', [function () {
     return {
         restrict: 'E',
-        template: require('./bs4-select.directive.html'),
+        template: require('./bs4-selectbox.directive.html'),
         scope: {
             options: '=', // must be array of objects
             model: '=', // must be array of objects
@@ -22,14 +22,14 @@ angular.module('bs4-select').directive('bs4Select', [function () {
         },
         transclude: true,
         bindToController: true,
-        controllerAs: 'bs4SelectCtrl',
-        controller: scBs4SelectController,
+        controllerAs: 'bs4selectboxCtrl',
+        controller: scBs4selectboxController,
     };
 }]);
 
-scBs4SelectController.$inject = ['$scope'];
+scBs4selectboxController.$inject = ['$scope'];
 
-function scBs4SelectController($scope) {
+function scBs4selectboxController($scope) {
     const ctrl = this;
 
     ctrl.search = '';

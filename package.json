@@ -1,0 +1,26 @@
+{
+  "name": "bs4-selectbox",
+  "version": "1.0.0",
+  "description": "A simple yet powerful selectbox component for angularjs.",
+  "directories": {
+    "doc": "docs",
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frapa/bs4-selectbox.git"
+  },
+  "keywords": [
+    "angularjs",
+    "selectbox"
+  ],
+  "author": "Francesco Pasa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frapa/bs4-selectbox/issues"
+  },
+  "homepage": "https://github.com/frapa/bs4-selectbox#readme"
+}

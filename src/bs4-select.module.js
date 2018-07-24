@@ -1,1 +1,0 @@
-angular.module('bs4-select', []);
