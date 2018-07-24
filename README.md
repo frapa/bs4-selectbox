@@ -41,7 +41,7 @@ import 'bs4-selectbox';
 Finally add the modules as a dependency of your angularjs app
 
 ```javascript
-angular.module('myApp, ['bs4-selectbox'])
+angular.module('myApp', ['bs4-selectbox'])
 ```
 
 ## Documentation
