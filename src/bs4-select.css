@@ -1,0 +1,30 @@
+.bs4-select-container {
+    cursor: text;
+    vertical-align: baseline;
+}
+
+.bs4-select-container .select-input {
+    margin: 1px;
+    outline: none;
+    border: 0;
+    background: 0;
+    box-shadow: none;
+}
+
+.bs4-select-container .select-input:active,
+.bs4-select-container .select-input:focus {
+    outline: none;
+    border: 0;
+    background: 0;
+    box-shadow: none;
+}
+
+.bs4-select-container .choices .badge-close {
+    margin-left: 1em;
+    margin-right: 0.5em;
+    cursor: pointer;
+}
+
+.bs4-select-container .dropdown-toggle::after {
+    margin-top: 12px;
+}

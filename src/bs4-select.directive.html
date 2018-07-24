@@ -1,0 +1,29 @@
+<div class="bs4-select-container">
+    <span class="dropdown-toggle form-control d-flex" href="javascript:void(0)"
+       role="button" id="bs4-select-{{ bs4SelectCtrl.uuid }}" data-toggle="dropdown"
+       aria-haspopup="true" aria-expanded="false">
+
+        <span class="choices" ng-if="bs4SelectCtrl.multiple">
+            <span class="badge badge-secondary p-2 mr-2 d-inline-flex align-items-center"
+                  ng-repeat="item in bs4SelectCtrl.model">
+                <span ng-transclude></span>
+                <span class="badge-close" ng-click="bs4SelectCtrl.deselect($event, item);">✕</span>
+            </span>
+        </span>
+
+        <span ng-if="!bs4SelectCtrl.multiple" ng-transclude>
+        </span>
+
+        <input type="text" class="select-input flex-grow-1"
+               ng-model="bs4SelectCtrl.search"
+               ng-change="bs4SelectCtrl.change($event);"
+               ng-keydown="bs4SelectCtrl.keydown($event);" />
+    </span>
+    <div class="dropdown-menu" aria-labelledby="bs4-select-{{ bs4SelectCtrl.uuid }}">
+        <a class="dropdown-item" href="javasctipt:void(0)"
+           ng-repeat="item in bs4SelectCtrl.options | filter:bs4SelectCtrl.available"
+           ng-click="bs4SelectCtrl.select($event, item);"
+           ng-transclude>
+        </a>
+    </div>
+</div>
