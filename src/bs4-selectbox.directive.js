@@ -39,8 +39,15 @@ function bs4SelectboxController($scope) {
     ctrl.select = select;
     ctrl.deselect = deselect;
     ctrl.keydown = keydown;
+    ctrl.$onInit = $onInit;
 
     // --------------------------------
+
+    function $onInit() {
+        if (!ctrl.multiple && ctrl.model.length) {
+            $scope.item = ctrl.model[0];
+        }
+    }
 
     function search(obj) {
         if (!ctrl.searchAttrs) {
@@ -73,7 +80,7 @@ function bs4SelectboxController($scope) {
 
     function inModel(option) {
         if (ctrl.key) {
-            return ctrl.model.findIndex(opt => opt[ctrl.key] === option[ctrl.key]) !== -1;
+            return ctrl.model.findIndex(opt => opt[ctrl.key] == option[ctrl.key]) !== -1;
         } else {
             return ctrl.model.indexOf(option) !== -1;
         }
