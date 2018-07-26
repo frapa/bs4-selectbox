@@ -4,14 +4,14 @@
        aria-haspopup="true" aria-expanded="false">
 
         <span class="bs4-choices" ng-if="bs4SelectboxCtrl.multiple">
-            <span class="badge badge-dark p-2 mr-2 d-inline-flex align-items-center justify-content-start text-left"
+            <span class="bs4-badge badge badge-dark p-2 mr-2 d-inline-flex align-items-center justify-content-start text-left"
                   ng-repeat="item in bs4SelectboxCtrl.model">
                 <span ng-transclude></span>
                 <span class="badge-close" ng-click="bs4SelectboxCtrl.deselect($event, item);">✕</span>
             </span>
         </span>
 
-        <span ng-if="!bs4SelectboxCtrl.multiple" class="mr-2">
+        <span ng-if="!bs4SelectboxCtrl.multiple" class="mr-2 bs4-badge">
             <span ng-if="bs4SelectboxCtrl.model.length" ng-transclude></span>
         </span>
 

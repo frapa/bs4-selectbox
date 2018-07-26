@@ -25,6 +25,10 @@
     box-shadow: none;
 }
 
+.bs4-selectbox-container .bs4-choices .bs4-badge {
+    text-wrap: nowrap;
+}
+
 .bs4-selectbox-container .bs4-choices .badge-close {
     margin-left: 1em;
     margin-right: 0.5em;
