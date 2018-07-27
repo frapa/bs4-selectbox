@@ -18,7 +18,7 @@ angular.module('bs4-selectbox').directive('bs4Selectbox', [function () {
             multiple: '@',
             searchAttrs: '@',
             key: '@',
-            //callback: '&?', // callback to be called on change
+            callback: '=?', // callback to be called on change
         },
         transclude: true,
         bindToController: true,
@@ -113,6 +113,8 @@ function bs4SelectboxController($scope) {
         evt.preventDefault();
         // keep focus
         focus();
+
+        ctrl.callback && ctrl.callback('add', option, this.model, evt);
     }
 
     function deselect(evt, option) {
@@ -122,6 +124,8 @@ function bs4SelectboxController($scope) {
 
         ctrl.model.splice(ctrl.model.indexOf(option), 1);
         evt.stopPropagation();
+
+        ctrl.callback && ctrl.callback('remove', option, this.model, evt);
     }
 
     function keydown(evt) {
