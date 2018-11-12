@@ -41,6 +41,12 @@ function bs4SelectboxController($scope) {
     ctrl.deselect = deselect;
     ctrl.keydown = keydown;
     ctrl.$onInit = $onInit;
+    
+    $scope.$watchCollection('bs4SelectboxCtrl.model', function () {
+        if (!ctrl.multiple && ctrl.model.length) {
+            $scope.item = ctrl.model[0];
+        }
+    });
 
     // --------------------------------
 
