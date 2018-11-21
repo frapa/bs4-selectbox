@@ -1,9 +1,12 @@
-<div class="bs4-selectbox-container">
-    <span class="dropdown-toggle form-control d-flex align-items-center"
-       role="button" id="bs4-selectbox-{{ bs4SelectboxCtrl.uuid }}" data-toggle="dropdown"
-       aria-haspopup="true" aria-expanded="false">
+<div class="bs4-selectbox-container"
+    id="bs4-selectbox-{{ bs4SelectboxCtrl.uuid }}-container">
 
-        <span class="bs4-choices" ng-if="bs4SelectboxCtrl.multiple">
+    <span class="dropdown-toggle form-control d-flex align-items-center bs4-selectbox-toggle"
+       role="button" id="bs4-selectbox-{{ bs4SelectboxCtrl.uuid }}" data-toggle="dropdown"
+       aria-haspopup="true" aria-expanded="false"
+       tabindex="0">
+
+        <span class="bs4-choices flex-grow-1" ng-if="bs4SelectboxCtrl.multiple">
             <span class="bs4-badge badge badge-dark p-2 mr-2 d-inline-flex align-items-center justify-content-start text-left"
                   ng-repeat="item in bs4SelectboxCtrl.model">
                 <span ng-transclude></span>
@@ -11,19 +14,28 @@
             </span>
         </span>
 
-        <span ng-if="!bs4SelectboxCtrl.multiple" class="mr-2 bs4-badge">
+        <span ng-if="!bs4SelectboxCtrl.multiple" class="mr-2 bs4-badge bs4-single-container flex-grow-1 flex-shrink-1">
             <span ng-if="bs4SelectboxCtrl.model.length" ng-transclude></span>
         </span>
-
-        <input type="text" class="bs4-select-input flex-grow-1"
-            ng-model="bs4SelectboxCtrl.search"
-            ng-change="bs4SelectboxCtrl.change($event);"
-            ng-keydown="bs4SelectboxCtrl.keydown($event);" />
     </span>
-    <div class="dropdown-menu w-100" aria-labelledby="bs4-selectbox-{{ bs4SelectboxCtrl.uuid }}">
+    <div class="dropdown-menu w-100"
+        id="bs4-selectbox-{{ bs4SelectboxCtrl.uuid }}-menu"
+        aria-labelledby="bs4-selectbox-{{ bs4SelectboxCtrl.uuid }}">
+
+        <div class="d-flex dropdown-item">
+            <input type="text" class="bs4-select-input form-control flex-grow-1"
+                id="bs4-selectbox-{{ bs4SelectboxCtrl.uuid }}-input"
+                placeholder="{{ bs4SelectboxCtrl.placeholder }}"
+                ng-class="{ 'd-none': !bs4SelectboxCtrl.search }"
+                ng-model="bs4SelectboxCtrl.searchTerms"
+                ng-change="bs4SelectboxCtrl.change($event);"
+                ng-keydown="bs4SelectboxCtrl.keydown($event);" />
+        </div>
+        
         <a href="#" class="dropdown-item"
-            ng-repeat="item in bs4SelectboxCtrl.options | filter:bs4SelectboxCtrl.available"
+            ng-repeat="item in bs4SelectboxCtrl._options | filter:bs4SelectboxCtrl.available"
             ng-click="bs4SelectboxCtrl.select($event, item);"
+            ng-keydown="bs4SelectboxCtrl.itemkeydown($event, $index);"
             ng-transclude>
         </a>
     </div>

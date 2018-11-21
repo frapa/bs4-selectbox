@@ -13,17 +13,26 @@ angular.module('bs4-selectbox').directive('bs4Selectbox', [function () {
         restrict: 'E',
         template: require('./bs4-selectbox.directive.html'),
         scope: {
-            options: '=', // must be array of objects
+            options: '=', // must be array of objects or a function that returns an array of objects
             model: '=', // must be array of objects
+            search: '=?', // boolean (default = true)
             multiple: '@',
             searchAttrs: '@',
             key: '@',
             callback: '=?', // callback to be called on change
+            placeholder: '@',
+            limit: '=?', // limit if options are lazy loaded
         },
         transclude: true,
         bindToController: true,
         controllerAs: 'bs4SelectboxCtrl',
         controller: bs4SelectboxController,
+        link: function ($scope, el, attrs, ctrl) {
+            ctrl.container = el.children().first();
+            ctrl.container.on('shown.bs.dropdown', function () {
+                ctrl.focus();
+            });
+        }
     };
 }]);
 
@@ -32,15 +41,19 @@ bs4SelectboxController.$inject = ['$scope'];
 function bs4SelectboxController($scope) {
     const ctrl = this;
 
-    ctrl.search = '';
+    ctrl.searchTerms = '';
     $scope.item = {};
     ctrl.uuid = uuidv4();
 
     ctrl.available = available;
+    ctrl.change = change;
     ctrl.select = select;
     ctrl.deselect = deselect;
     ctrl.keydown = keydown;
+    ctrl.itemkeydown = itemkeydown;
+    ctrl.focus = focus;
     ctrl.$onInit = $onInit;
+    ctrl.$onDestroy = $onDestroy;
     
     $scope.$watchCollection('bs4SelectboxCtrl.model', function () {
         if (!ctrl.multiple && ctrl.model.length) {
@@ -54,6 +67,24 @@ function bs4SelectboxController($scope) {
         if (!ctrl.multiple && ctrl.model.length) {
             $scope.item = ctrl.model[0];
         }
+
+        if (ctrl.options instanceof Array) {
+            ctrl._options = ctrl.options;
+        } else {
+            ctrl.options(ctrl.searchTerms, function (options) {
+                ctrl._options = options;
+                if (options.length === 0) checkLater();
+                $scope.$apply();
+            });
+        }
+
+        if (ctrl.search === undefined) {
+            ctrl.search = true; // default true
+        }
+    }
+
+    function $onDestroy() {
+        ctrl.container.off('shown.bs.dropdown');
     }
 
     function search(obj) {
@@ -62,7 +93,7 @@ function bs4SelectboxController($scope) {
         }
 
         const searchAttrs = ctrl.searchAttrs.split(',').map(s => s.trim());
-        const search = ctrl.search.toLowerCase();
+        const terms = ctrl.searchTerms.toLowerCase();
 
         let found = false;
         for (const attr of searchAttrs) {
@@ -75,7 +106,7 @@ function bs4SelectboxController($scope) {
                     value = value.toString().toLowerCase();
                 }
 
-                if (value.indexOf(search) !== -1) {
+                if (value.indexOf(terms) !== -1) {
                     found = true;
                     break;
                 }
@@ -94,7 +125,7 @@ function bs4SelectboxController($scope) {
     }
 
     function available(option) {
-        if (ctrl.search) {
+        if (ctrl.searchTerms) {
             return !inModel(option) && search(option);
         } else {
             return !inModel(option);
@@ -102,8 +133,10 @@ function bs4SelectboxController($scope) {
     }
 
     function focus() {
-        const input = document.querySelector('#bs4-selectbox-' + ctrl.uuid + ' input');
-        input.focus();
+        setTimeout(function () {
+            const input = document.querySelector('#bs4-selectbox-' + ctrl.uuid + '-input');
+            input.focus();
+        });
     }
 
     function select(evt, option) {
@@ -114,7 +147,7 @@ function bs4SelectboxController($scope) {
             ctrl.model[0] = option;
         }
 
-        ctrl.search = '';
+        ctrl.searchTerms = '';
 
         evt.preventDefault();
         // keep focus
@@ -135,8 +168,46 @@ function bs4SelectboxController($scope) {
     }
 
     function keydown(evt) {
-        if (evt.keyCode === 8 && !evt.target.value && ctrl.model.length) {
-            deselect(evt, ctrl.model.slice(-1)[0]);
+        if (evt.keyCode === 40) {
+            // Select first element
+            const items = document.querySelector('#bs4-selectbox-' + ctrl.uuid + '-menu').children;
+            items.length > 1 && items[1] && items[1].focus();
         }
+    }
+
+    function itemkeydown(evt, i) {
+        if (evt.keyCode === 38 && i === 0) {
+            // Select input
+            document.querySelector('#bs4-selectbox-' + ctrl.uuid + '-input').focus();
+        }
+    }
+
+    let debouncing = false;
+    function change() {
+        if (debouncing) return;
+        debouncing = true;
+        
+        setTimeout(function () {
+            if (ctrl.options instanceof Function) {
+                ctrl.options(ctrl.searchTerms, function (options) {
+                    ctrl._options = options;
+                    $scope.$apply();
+                });
+            }
+
+            debouncing = false;
+        }, 250);
+    }
+
+    // Sometimes options cannot return before some other stuff has been initialized
+    // Loop and check periodically until there is some data.
+    function checkLater() {
+        setTimeout(function () {
+            ctrl.options(ctrl.searchTerms, function (options) {
+                ctrl._options = options;
+                if (options.length === 0) checkLater();
+                $scope.$apply();
+            });
+        }, 1000);
     }
 }

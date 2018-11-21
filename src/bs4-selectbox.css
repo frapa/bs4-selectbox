@@ -10,21 +10,7 @@
 }
 
 .bs4-selectbox-container .bs4-select-input {
-    margin: 1px;
-    outline: none;
-    border: 0;
-    background: 0;
-    box-shadow: none;
-    flex-basis: 0;
-    flex-shrink: 1;
-}
-
-.bs4-selectbox-container .bs4-select-input:active,
-.bs4-selectbox-container .bs4-select-input:focus {
-    outline: none;
-    border: 0;
-    background: 0;
-    box-shadow: none;
+    display: block;
 }
 
 .bs4-selectbox-container .bs4-choices .bs4-badge {
@@ -37,10 +23,16 @@
     cursor: pointer;
 }
 
-.bs4-selectbox-container .dropdown-toggle::after {
-}
-
 .bs4-selectbox-container .dropdown-menu {
     max-height: 20em;
     overflow-y: auto;
+}
+
+.bs4-single-container {
+    flex-basis: 0;
+    min-width: 0;
+}
+
+.bs4-selectbox-toggle {
+    min-height: calc(2.25rem + 2px);
 }
